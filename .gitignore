@@ -3,6 +3,7 @@
 
 # IDE file
 *.vscode
+*.vs
 !*.c
 !Makefile
 # Object files
