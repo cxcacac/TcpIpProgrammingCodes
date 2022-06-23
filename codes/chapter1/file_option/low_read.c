@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcnt1.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 #define BUF_SIZE 100

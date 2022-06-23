@@ -5,15 +5,15 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define BUF_SIZE 1024;
+#define BUF_SIZE 1024
+
 void error_handling(char* message);
 
 int main(int argc, char* argv[]){
     int serv_sock, clnt_sock;
     char message[BUF_SIZE];
-    int str_len, i;
+    int str_len;
 
-    struct sockaddr_i serv_adr, clnt_adr;
     socklen_t clnt_adr_sz;
     
     if(argc != 2){
@@ -26,10 +26,11 @@ int main(int argc, char* argv[]){
         error_handling("socket() error");
     }
 
+    struct sockaddr_in serv_adr, clnt_adr;
     memset(&serv_adr, 0, sizeof(serv_adr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    serv_addr.sin_port = htons(atoi(argv[1]));
+    serv_adr.sin_family = AF_INET;
+    serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
+    serv_adr.sin_port = htons(atoi(argv[1]));
 
     if(bind(serv_sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr)==-1)){
         error_handling("bind() error");
@@ -52,7 +53,7 @@ int main(int argc, char* argv[]){
             printf("Connected client %d \n", i+1);
         }
         
-        while(str_len = read(clnt_sock, message, BUF_SIZE) != 0){
+        while((str_len = read(clnt_sock, message, BUF_SIZE)) != 0){
             write(clnt_sock, message, str_len);  
         }
         

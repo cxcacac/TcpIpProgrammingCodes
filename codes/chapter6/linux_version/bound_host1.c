@@ -1,3 +1,4 @@
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,22 +15,18 @@ void error_handling(char* message){
 }
 
 int main(int argc, char* argv[]){
-    int sock;
     char message[BUF_SIZE];
-    struct sockaddr_in my_adr, your_adr;
-    socklen_t adr_sz;
-    int str_len;
 
     if(argc != 2){
         printf("Usage: %s <port> \n", argv[0]);
         exit(1);
     }
     
-    sock = socket(PF_INET, SOCK_DGRAM, 0);
+    int sock = socket(PF_INET, SOCK_DGRAM, 0);
     if(sock == -1){
         error_handling("socket() error");
     }
-
+    struct sockaddr_in my_adr;
     memset(&my_adr, 0, sizeof(my_adr));
     my_adr.sin_family = AF_INET;
     my_adr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -38,10 +35,12 @@ int main(int argc, char* argv[]){
     if(bind(sock, (struct sockaddr*)&my_adr, sizeof(my_adr))==-1){
         error_handling("bind() error");
     }
-    
+    int str_len;
+    struct sockaddr_in your_adr;
     for(int i = 0; i < 3; ++i){
         sleep(5);
-        str_len = recvfrom(sock, message, BUF_SIZE, 0, (struct sockaddr*)&your_adr, sizeof(your_adr));
+        socklen_t your_adr_sz = sizeof(your_adr);
+        str_len = recvfrom(sock, message, BUF_SIZE, 0, (struct sockaddr*)&your_adr, &your_adr_sz);
         printf("Message %d: %s\n", i+1, message);
     }
     close(sock);

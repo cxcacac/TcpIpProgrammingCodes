@@ -14,7 +14,6 @@ void error_handling(char* message){
 }
 
 int main(int argc, char* argv[]){
-    int sock;
     char msg1[] = "Hi";
     char msg2[] = "I'm another UDP host!";
     char msg3[] = "Nice to meet you";
@@ -25,9 +24,9 @@ int main(int argc, char* argv[]){
         exit(1);
     }
     
-    sock = socket(PF_INET, SOCK_DGRAM, 0);
+    int sock = socket(PF_INET, SOCK_DGRAM, 0);
     if(sock == -1){
-        error_handling('"socket() error');
+        error_handling("socket() error");
     }
     memset(&your_adr, 0, sizeof(your_adr));
     your_adr.sin_family = AF_INET;

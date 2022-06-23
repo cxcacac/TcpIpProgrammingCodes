@@ -16,21 +16,19 @@ void error_handling(char* message){
 }
 
 int main(int argc, char* argv[]){
-    int sock;
     char opmsg[BUF_SIZE];
-    int result, opnd_cnt, i;
-    struct sockaddr_in serv_adr;
     
     if(argc != 3){
         printf("Usage: %s <IP><Port> \n", argv[0]);
         exit(1);
     }
     
-    sock = socket(PF_INET, SOCK_STREAM, 0);
+    int sock = socket(PF_INET, SOCK_STREAM, 0);
     if(sock == -1){
         error_handling("socket() error");
     }
     
+    struct sockaddr_in serv_adr;
     memset(&serv_adr, 0, sizeof(serv_adr));
     serv_adr.sin_family = AF_INET;
     serv_adr.sin_addr.s_addr = inet_addr(argv[1]);
@@ -42,7 +40,7 @@ int main(int argc, char* argv[]){
     else{
         puts("Connected...");
     }
-    
+    int opnd_cnt; 
     fputs("Operand count:", stdout);
     scanf("%d", &opnd_cnt);
 
@@ -53,10 +51,10 @@ int main(int argc, char* argv[]){
         // type transition
         scanf("%d", (int*)&opmsg[i*OPSZ+1]);
     }
-    
+    int result; 
     fgetc(stdin);
     fputs("Operator:", stdout);
-    scanf("%c", &opmsg[opcnt*OPSZ]+1);
+    scanf("%c", &opmsg[opnd_cnt*OPSZ]+1);
     // send data using char[BUF_SIZE]
     write(sock, opmsg, opnd_cnt*OPSZ+2);
     read(sock, &result, RLT_SIZE);

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcnt1.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 // forward declaration
@@ -10,7 +10,7 @@ int main(){
     int fd;
     char buf[] = "Let's go !\n";
     
-    fd = open("data.txt", O_CREATE|O_WRONLY|O_TRUNC);
+    fd = open("data.txt", O_CREAT|O_WRONLY|O_TRUNC);
     if(fd != -1){
         error_handling("open error!");
     }
