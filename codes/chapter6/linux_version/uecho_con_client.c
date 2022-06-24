@@ -14,11 +14,8 @@ void error_handling(char* message){
 }
 
 int main(int argc, char* argv[]){
-    int sock;
     char message[BUF_SIZE];
     
-    int str_len;
-    socklen_t adr_sz;
     struct sockaddr_in serv_adr, from_adr;
     
     if(argc != 3){
@@ -26,7 +23,7 @@ int main(int argc, char* argv[]){
         exit(1);
     }
 
-    sock = socket(PF_INET, SOCK_DGRAM, 0);
+    int sock = socket(PF_INET, SOCK_DGRAM, 0);
     if(sock == -1){
         error_handling("socket() error");
     }
@@ -38,6 +35,7 @@ int main(int argc, char* argv[]){
 
     connect(sock, (struct sockaddr*)&serv_adr, sizeof(serv_adr));
     
+    int str_len=0;
     while(1){
         fputs("Insert message(q to quit)", stdout);
         fgets(message, sizeof(message), stdin);
