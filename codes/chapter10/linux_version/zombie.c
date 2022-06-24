@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
         puts("End Child Process");
     }
     else{
-        Puts("End parent Processs");
+        puts("End parent Processs");
     }
     return 0;
 }

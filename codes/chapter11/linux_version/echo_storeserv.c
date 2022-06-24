@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 
 #define BUF_SIZE 100
 
@@ -40,7 +42,7 @@ int main(int argc, char* argv[]){
     state = sigaction(SIGCHLD, &act, 0);
 
     serv_sock = socket(PF_INET, SOCK_STREAM, 0);
-    memset(&serv_sock, 0, sizeof(serv_sock));
+    memset(&serv_adr, 0, sizeof(serv_adr));
     serv_adr.sin_family = AF_INET;
     serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
     serv_adr.sin_port = htons(atoi(argv[1]));
@@ -56,7 +58,7 @@ int main(int argc, char* argv[]){
     pid = fork();
     
     if(pid==0){
-        FILE * fp = open("echomsg.txt", "wt");
+        FILE * fp =fopen("echomsg.txt", "wt");
         char msgbuf[BUF_SIZE];
         
         int len;

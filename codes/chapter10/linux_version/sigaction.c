@@ -10,7 +10,6 @@ void timeout(int sig){
 }
 
 int main(int argc, char* argv[]){
-    int i;
     // struct
     struct sigaction act;
     act.sa_handler = timeout;

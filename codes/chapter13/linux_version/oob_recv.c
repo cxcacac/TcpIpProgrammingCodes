@@ -53,12 +53,12 @@ int main(int argc, char* argv[]){
     listen(acpt_sock, 5);
 
     serv_adr_sz = sizeof(serv_adr);
-    recv_sock = accept(acpt_sock, (struct sockaddr*)&serv_adr, serv_adr_sz);
+    recv_sock = accept(acpt_sock, (struct sockaddr*)&serv_adr, &serv_adr_sz);
 
     fcntl(recv_sock, F_SETOWN, getpid());
     state = sigaction(SIGURG, &act, 0);
     
-    while((str_len=recv(recv_sock, buf, sizeof(buf)-1))!=0){
+    while((str_len=recv(recv_sock, buf, sizeof(buf)-1, 0))!=0){
         if(str_len == -1){
             continue;
         }

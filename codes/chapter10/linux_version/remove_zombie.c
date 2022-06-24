@@ -8,7 +8,7 @@ void read_childproc(int sig){
     int status;
     pid_t pid = waitpid(-1, &status, WNOHANG);
     if(WIFEXITED(status)){
-        printf("Remove Proc id: %d \n", id);
+        printf("Remove Proc id: %d \n", pid);
         printf("Child send: %d \n", WEXITSTATUS(status));
     }
 }
@@ -22,13 +22,13 @@ int main(int argc, char* argv[]){
     sigaction(SIGCHLD, &act, 0);
 
     pid = fork();
-    if(pid = 0){
+    if(pid == 0){
         puts("Hi, I'm child Process");
         sleep(10);
         return 12;
     }
     else{
-        print("Child proc id: %n \n", pid);
+        printf("Child proc id: %d \n", pid);
         pid = fork();
         if(pid==0){
             puts("Hi, I'm Child Process");

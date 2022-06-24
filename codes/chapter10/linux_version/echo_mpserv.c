@@ -56,7 +56,7 @@ int main(int argc, char* argv[]){
 
     while(1){
         adr_sz = sizeof(clnt_adr);
-        clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, adr_sz);
+        clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, &adr_sz);
         if(clnt_sock==-1){
             continue;
         }

@@ -14,12 +14,11 @@ void error_handling(char* message){
 }
 
 int main(int argc, char* argv[]){
-    int sock;
     int snd_buf = 1024*3, rcv_buf = 1024*3;
     int state;
     socklen_t len;
     
-    sock = socket(PF_INET, SOCK_STREAM, 0);
+    int sock = socket(PF_INET, SOCK_STREAM, 0);
     
     state = setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (void*)&rcv_buf, sizeof(rcv_buf));
     if(state){

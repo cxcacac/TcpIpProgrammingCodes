@@ -15,21 +15,21 @@ void error_handling(char* message){
 }
 
 int main(int argc, char *argv[]){
-    int serv_sock, clnt_sock;
     char message[30];
     int option, str_len;
-    socklen_t optlen, clnt_adr_sz;
-    struct sockaddr_in serv_adrr, clnt_adr;    
-    
     if(argc != 2){
         printf("Usage: %s <port> \n", argv[0]);
         exit(1);
     }
     
+    int serv_sock, clnt_sock;
     serv_sock = socket(PF_INET, SOCK_STREAM, 0);
     if(serv_sock == -1){
         error_handling("socket() error");
     }
+    
+    socklen_t optlen, clnt_adr_sz;
+    struct sockaddr_in serv_adr, clnt_adr;    
     
     optlen = sizeof(option);
     option = TRUE;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
     clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
     
     while((str_len = read(clnt_sock, message, sizeof(message)))!=0){
-        write(clnt_adr, message, str_len);
+        write(clnt_sock, message, str_len);
         write(1, message, str_len);
     }
     

@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
     
     optlen = sizeof(sock_type);
     tcp_sock = socket(PF_INET, SOCK_STREAM, 0);
-    ucp_sock = socket(PF_INET, SOCK_DGRAM, 0);
+    udp_sock = socket(PF_INET, SOCK_DGRAM, 0);
     
     printf("SOCK_STREAM: %d \n", SOCK_STREAM);
     printf("SOCK_DGRAM: %d \n", SOCK_DGRAM);

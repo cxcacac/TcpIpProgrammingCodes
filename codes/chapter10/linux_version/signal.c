@@ -17,7 +17,6 @@ void keycontrol(int sig){
 }
 
 int main(int argc, char* argv[]){
-    int i;
     signal(SIGALRM, timeout);
     signal(SIGINT, keycontrol);
     alarm(2);

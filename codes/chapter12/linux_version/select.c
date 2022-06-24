@@ -16,9 +16,9 @@ int main(int argc, char* argv[]){
     // FD_CLR(int fd, fd_set* fdset);
     // FD_ISSET(int fd, fd_set* fdset);
 
-    FD_ZERO(&read);
+    FD_ZERO(&reads);
     // 0 is standard input(console)
-    FD_SET(0, &read);
+    FD_SET(0, &reads);
 
     // timeout.tv_sec = 5;
     // timeout.tv_usec = 5000;
